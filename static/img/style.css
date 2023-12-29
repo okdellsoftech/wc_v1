@@ -1,0 +1,400 @@
+
+body::before {
+  display: block;
+  content: '';
+  height: 10px;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+@media (min-width: 768px) {
+  .news-input {
+    width: 50%;
+  }
+}
+
+/*   */
+
+#frm ul{
+  list-style:none;
+}
+
+#text{
+  width:100%;
+  height:150px;
+}
+
+#input form ul{
+  padding:0;
+}
+
+#results0 table{
+  table-layout:fixed;
+  width:50%;
+}
+
+@media (max-width:991px) {
+  #results0 table{
+    table-layout:fixed;
+    width:100%;
+  }
+}
+
+.container-fluid{
+
+  padding-top:0;
+  width:100%;
+}
+
+@media (max-width:991px) {
+  div.container-fluid{
+    width:100%;
+  }
+}
+
+@media (max-width:1199px) {
+  div.container-fluid{
+    width:100%;
+  }
+}
+
+@media (max-width:991px) {
+  div.table-responsive{
+    font-size:13px;
+  }
+}
+
+#file{
+  float:right;
+  width:295px;
+}
+
+#frm li{
+  padding-left:10px;
+  padding-right:10px;
+}
+
+#glas{
+  color:red;
+}
+
+#soglas, #soglas2{
+  color:blue;
+}
+
+#jumbo{
+  background-image:url("../img/books.jpg");
+  background-size:cover;
+  background-repeat:no-repeat;
+  color:white;
+  padding:10px;
+  height:190px;
+}
+
+.jumbotron img{
+  width:160px;
+  float:left;
+  padding-right:10px;
+  padding-top:25px;
+}
+
+#jumbo h2{
+  padding-top:25px;
+  padding-bottom:0px;
+}
+
+#title{
+  width:50%;
+  display:inline;
+}
+
+#soglass:hover{
+  background-color:rgb(193,192,255);
+}
+.btn-primary{
+  border-radius: 0;
+  
+  background-color: #4284BC;
+  border:none;
+}
+.btn-primary:hover{
+  background-color:#2a6497;
+  border-radius: 0;
+  border-color: white;
+}
+
+.nav > li > a:hover, .nav > li > a:focus{
+  background-color:rgb(212,75,56);
+  color:white;
+}
+
+.jumbotron h1{
+  text-align:center;
+}
+
+#logo img{
+  vertical-align:middle;
+  height: 80px;
+}
+
+#results{
+  display:none;
+}
+
+div.container-fluid h3{
+  display:none;
+}
+
+.progressbar{
+  height:25px;
+  margin-bottom:8px;
+  background-color:#4284BC;
+  width:0;
+  text-align:center;
+  color:white;
+  border-radius:0;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  padding-top: 100px;
+
+
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 10px;
+  border: 1px solid #888;
+  width: 80%;
+  border-radius: 0;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn.sharp {
+    border-radius: 0!important;
+    color: #eef2f5;
+    background-color: #4284BC;
+}
+.btn.sharp:hover{
+  /*background-color: rgb(212,75,56);*/
+   border-color: #4284BC;
+   color: #4284BC;
+   background-color: white;
+}
+
+#detail2{
+    table-layout: fixed!important;
+    /*overflow-x: scroll!important;*/
+    display: block;
+    overflow-x: auto;
+
+}
+#detail2 th,#detail2 td{
+    width: 200px!important;
+}
+.dell{
+    width:100%;
+    border-radius: 0!important;
+
+}
+.dell_cell{
+    width: 10px;
+}
+#list_all_table > tbody > tr > td> a:hover{
+    cursor: pointer;
+}
+.toolbar {
+    float:left;
+}
+#excel_table_wrapper h2 { display: inline }
+
+.input-group label {
+    border-radius: 0!important;
+    color: rgba(33, 46, 67, 0.87);
+    background-color: #ffffff;
+    border: 1px;
+
+}
+.input-group input,.input-group select{
+    border-radius: 0!important;
+}
+.nav-link{
+  border-radius: 0!important;
+}
+
+
+/*body{*/
+  /*background-image: url("../img/bg.jpg");*/
+  /*background-repeat: no-repeat;*/
+  /*background-attachment: fixed;*/
+  /*background-size:cover*/
+/*}*/
+
+
+.container-fluid{
+  background-color: white!important;
+  /*background-image: linear-gradient(0deg, #3e69fe 0%, #4cd4e3 100%);  */
+  margin-top: 60px;
+}
+#input_wrapper{
+  width: 200px;
+}
+
+.row>p{
+    padding: 20px;
+}
+#particles-js{
+    position: relative;
+    z-index: 1;
+    margin: 0!important;
+
+}
+.particles-js-canvas-el{
+    width: 100%;
+    height: 350px!important;
+    position: relative;
+    left: 0;
+    top: 0;
+    z-index: -1;
+}
+
+body{
+    font-family: "Poppins", sans-serif !important;
+}
+
+#input>.nav>li>a{
+    background-color: #4284BC!important;
+    color: white!important;
+}
+
+.nav-link.active{
+    /*color: #20d4d5;*/
+    font-weight: bold;
+}
+.nav-link{
+    border-color: white!important;
+}
+.nav.nav-tabs{
+    border: 0;
+}
+
+#particles-js>img{
+    position: absolute;
+    right: 0!important;
+    height: 350px;
+    pointer-events: none;
+    width: 100%;
+}
+
+#logo_text{
+    position: absolute;
+    margin-left: 50%;
+    padding-top: 20px;
+}
+
+.navnew{
+    border-color: #4284BC!important;
+    background-color: white!important;
+    color: #4284BC!important;
+    margin: 1px;
+}
+.navnew:hover{
+  background-color:#29669c!important;
+  border-color: white!important;
+  color: white!important;
+
+}
+
+.pdf_img{
+  height: 50px;
+}
+
+.logo1{
+  height: 80px;
+  
+}
+.logo2{
+  height: 70px;
+  padding-left: 650px;
+}
+
+@media screen and (min-width: 1200px) {
+  .modal-dialog {
+    max-width: 800px; /* New width for default modal */
+  }
+  .logo2{
+    height: 70px;
+    padding-left: 650px;
+  }
+}
+
+
+@media screen and (max-width: 750px) {
+  #file {
+    height:35px;
+    width: 100px;
+    background: none;
+    color:#000;
+  }
+  .logo2{
+    height: 70px;
+    padding-left: 250px;
+  }
+
+}
+@media screen and (max-width: 650px) {
+  .btn_new {
+    height:35px;
+    width: 100px;
+    background: none;
+    color:#000;
+  }
+  .table-responsive{
+    font-size: 8px;
+    
+  }
+  .logo2{
+    height: 70px;
+    padding-left: 50px;
+   
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .logo2{
+    height: 70px;
+    padding-left: 450px;
+  }
+  }
+
+  @media screen and (max-width: 1432px) {
+    .logo2{
+      height: 70px;
+      padding-left: 650px;
+    }
+    }

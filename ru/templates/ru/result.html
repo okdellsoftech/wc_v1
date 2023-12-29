@@ -1,0 +1,448 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+  crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+  <title>WordCalc</title>
+</head>
+
+<body>
+ 
+
+  <!-- Logo -->
+  <div class="container">
+    <img src="{% static 'img/usaid_ru.png' %}" class="img-fluid  logo1" alt="..." style="height:50px">
+    <img src="{% static 'img/moes_ru.png' %}" class="img-fluid logo2" alt="..." style="height:50px">
+  
+</div>
+  
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-secondary.bg-gradient navbar-light  py-2 fixed-static-top ">
+    <div class="container">
+      <a href="/ru" class="navbar-brand"><span class="text-danger  fw-bold mx-1"><i class="far fa-arrow-alt-circle-left "></i> Назад</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navmenu">
+        <ul class="navbar-nav ms-auto">
+          
+          <li class="nav-item">
+            
+            <a class="text-danger fw-bold " href="{% static 'img/wc_manual_ru.pdf' %}" class="nav-link"><i class="fas fa-chalkboard-teacher  "> </i> Руководства</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Learn Sections -->
+  <section id="learn">
+    <div class="container p-2">
+      
+    <table class="table table-sm ">
+      <thead>
+        <tr>
+          <th scope="col"> Рекомендуемый уровень:</th>
+          
+          <th scope="col">% Часто используемых слов</th>
+          <th scope="col"><a style="color:#000; font-size: 16px;" href="https://www.dissercat.com/content/avtomatizirovannaya-otsenka-slozhnosti-uchebnykh-tekstov-na-osnove-statisticheskikh-parametr" target="_blank">Формула удобочитаемости Флеша (Оборнева 2006 г.)</a></th>
+          <th scope="col"><a style="color:#000; font-size: 16px;" href="https://orfogrammka.ru/%D1%88%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B8/%D0%B8%D0%BD%D0%B4%D0%B5%D0%BA%D1%81_%D1%82%D1%83%D0%BC%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8_%D0%B3%D0%B0%D0%BD%D0%BD%D0%B8%D0%BD%D0%B3%D0%B0/" target="_blank">Показатель Фога (Ганнинга)</a></th>
+          <th scope="col"><i class="fas fa-database  fa-1x " > </i> Текст</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td {% if words_q > 1 %} class="wordQClass1" {% endif %}>{{level_result  }}</td>
+        
+          <td>{{fw_p}}</td>
+          <td>{{fre_oborneva}}</td>
+          <td>{{gunning_fog_index}}</td>
+          {% for message in messages %}
+          <td> <p style="color:#0472a5; font-size: 16px; font-weight:bold"><i class="fa fa-check" aria-hidden="true"></i> {{ message }}</p></td>
+          {% endfor %}
+        </tr>
+       
+       
+        
+
+    
+      </tbody>
+    </table>
+
+
+
+
+      <div id="result" class="mt-5">
+        <ul class="nav nav-tabs" id="2nav">
+          <li class="nav-item"><a href="#tab-1" class="nav-link navnew  active" role="tab" data-toggle="tab">Матрица
+            </a></li>
+          <li class="nav-item"><a href="#tab-2" class="nav-link navnew " role="tab" data-toggle="tab">Слоги  и 
+              уникальные слова</a></li>
+          <li class="nav-item"><a href="#tab-3" class="nav-link navnew" role="tab" data-toggle="tab">Частотный словарь по тексту
+            </a></li>
+          <li class="nav-item"><a href="#tab-4" class="nav-link navnew" role="tab" data-toggle="tab">Многосложные слова </a>
+          </li>
+          <li class="nav-item"><a href="#tab-5" class="nav-link navnew" role="tab" data-toggle="tab">Сложные слова</a></li>
+          <li class="nav-item"><a href="#tab-6" class="nav-link navnew" role="tab" data-toggle="tab">Словарь детский <b>5000+</b> </a></li>
+   
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" role="tabpanel" id="tab-1">
+            <div class="table-responsive">
+              <table id="list" class="table table-hover table-condensed">
+                <tbody id="matrix">
+                 
+
+                  <thead class="header">
+                    <th colspan="2"></th>
+                    <th colspan="3">1 - класс</th>
+                    <th colspan="2">2 - класс</th>
+                    <th colspan="2">3 - класс</th>
+                    <th colspan="2">4 - класс</th>
+                  </thead>
+                  <thead class="header">
+                    <th>Уровень</th>
+                    <th> Результат</th>
+                    <th>1.1 </th>
+                    <th>1.2 </th>
+                    <th>1.3 </th>
+                    <th>2.1 </th>
+                    <th>2.2 </th>
+                    <th>3.1 </th>
+                    <th>3.2 </th>
+                    <th>4.1 </th>
+                    <th>4.2 </th>
+                  </thead>
+                  <tr id="NumberOfWords">
+                    
+                    <td>Общеее кол. слов</td>
+                    <td><span id="words">{{words_q}}</span><em> слов<em></td>
+                        <td {% if words_q >= 1 and words_q <= g1_word_q_l1  %} class="wordQClass" {% endif %}><em>{{g1_word_q_l1}} слов</em></td>
+                        <td {% if words_q > g1_word_q_l1 and words_q <= g1_word_q_l2 %} class="wordQClass" {% endif %}><em>{{g1_word_q_l2}} слов</em></td>
+                        <td {% if words_q > g1_word_q_l2 and words_q <= g1_word_q_l3 %} class="wordQClass" {% endif %}><em>{{g1_word_q_l3}}  слов</em></td>
+                        <td {% if words_q > g1_word_q_l3 and words_q <= g2_word_q_l1 %} class="wordQClass" {% endif %}><em>{{g2_word_q_l1}} слов</em></td>
+                        <td {% if words_q > g2_word_q_l1 and words_q <= g2_word_q_l2 %} class="wordQClass" {% endif %}><em>{{g2_word_q_l2}} слов</em></td>
+                        <td {% if words_q > g2_word_q_l2 and words_q <= g3_word_q_l1 %} class="wordQClass" {% endif %}><em>{{g3_word_q_l1}} слов</em></td>
+                        <td {% if words_q > g3_word_q_l1 and words_q <= g3_word_q_l2 %} class="wordQClass" {% endif %}><em>{{g3_word_q_l2}} слов</em></td>
+                        <td {% if words_q > g3_word_q_l2 and words_q <= g4_word_q_l1 %} class="wordQClass" {% endif %}><em>{{g4_word_q_l1}} слов</em></td>
+                        <td {% if words_q > g4_word_q_l1  %} class="wordQClass" {% endif %}><em>{{g4_word_q_l2}}+ слов</em></td>
+                      
+                  </tr>
+                  <tr id="average_syllables">
+                    <td>Средняя длина слова в слогах</td>
+                    <td><span id="m_slog">{{syllables_avg}}</span><em> слог(а/ов)</em></td>
+                    <td {% if syllables_avg >= 1 and syllables_avg <= g1_avgwl_insyllables_l1  %} class="wordQClass" {% endif %}><em>{{g1_avgwl_insyllables_l1}} слога</em></td>
+                    <td {% if syllables_avg > g1_avgwl_insyllables_l1 and syllables_avg <= g1_avgwl_insyllables_l2 %} class="wordQClass" {% endif %}><em>{{g1_avgwl_insyllables_l2}} слога</em></td>
+                    <td {% if syllables_avg > g1_avgwl_insyllables_l2 and syllables_avg <= g1_avgwl_insyllables_l3 %} class="wordQClass" {% endif %}><em>{{g1_avgwl_insyllables_l3}} слога</em></td>
+                    <td {% if syllables_avg > g1_avgwl_insyllables_l3 and syllables_avg <= g2_avgwl_insyllables_l1 %} class="wordQClass" {% endif %}><em>{{g2_avgwl_insyllables_l1}} слога</em></td>
+                    <td {% if syllables_avg > g2_avgwl_insyllables_l1 and syllables_avg <= g2_avgwl_insyllables_l2 %} class="wordQClass" {% endif %}><em>{{g2_avgwl_insyllables_l2}} слога</em></td>
+                    <td {% if syllables_avg > g2_avgwl_insyllables_l2 and syllables_avg <= g3_avgwl_insyllables_l1 %} class="wordQClass" {% endif %}><em>{{g3_avgwl_insyllables_l1}} слога</em></td>
+                    <td {% if syllables_avg > g3_avgwl_insyllables_l1 and syllables_avg <= g3_avgwl_insyllables_l2 %} class="wordQClass" {% endif %}><em>{{g3_avgwl_insyllables_l2}} слога</em></td>
+                    <td {% if syllables_avg > g3_avgwl_insyllables_l2 and syllables_avg <= g4_avgwl_insyllables_l1 %} class="wordQClass" {% endif %}><em>{{g4_avgwl_insyllables_l1}} слога</em></td>
+                    <td {% if syllables_avg > g4_avgwl_insyllables_l1  %} class="wordQClass" {% endif %}><em>{{g4_avgwl_insyllables_l2}}+ слога</em></td>
+                  
+                </tr>
+                  <tr id="NumberOfSentences">
+                    <td>Общее кол. предложений</td>
+                    <td><span id="sentences">{{sentence_q}}</span><em> предл.</em></td>
+                    <td {% if sentence_q >= 1 and sentence_q <= g1_sentence_q_l1  %} class="wordQClass" {% endif %}><em> {{g1_sentence_q_l1}} предл.</em></td>
+                    <td {% if sentence_q > g1_sentence_q_l1 and sentence_q <= g1_sentence_q_l2 %} class="wordQClass" {% endif %}><em> {{g1_sentence_q_l2}} предл.</em></td>
+                    <td {% if sentence_q > g1_sentence_q_l2 and sentence_q <= g1_sentence_q_l3 %} class="wordQClass" {% endif %}><em> {{g1_sentence_q_l3}} предл.</em></td>
+                    <td {% if sentence_q > g1_sentence_q_l3 and sentence_q <= g2_sentence_q_l1 %} class="wordQClass" {% endif %}><em> {{g2_sentence_q_l1}} предл.</em></td>
+                    <td {% if sentence_q > g2_sentence_q_l1 and sentence_q <= g2_sentence_q_l2 %} class="wordQClass" {% endif %}><em> {{g2_sentence_q_l2}} предл.</em></td>
+                    <td {% if sentence_q > g2_sentence_q_l2 and sentence_q <= g3_sentence_q_l1 %} class="wordQClass" {% endif %}><em> {{g3_sentence_q_l1}} предл.</em></td>
+                    <td {% if sentence_q > g3_sentence_q_l1 and sentence_q <= g3_sentence_q_l2 %} class="wordQClass" {% endif %}><em> {{g3_sentence_q_l2}} предл.</em></td>
+                    <td {% if sentence_q > g3_sentence_q_l2 and sentence_q <= g4_sentence_q_l1 %} class="wordQClass" {% endif %}><em> {{g4_sentence_q_l1}} предл.</em></td>
+                    <td {% if sentence_q > g4_sentence_q_l1 %} class="wordQClass" {% endif %}><em> {{g4_sentence_q_l2}}+ предл.</em></td>
+                   
+                  </tr>
+                  
+                  <tr id="AverageNumberOfSent">
+                    <td>Средняя длина предложений в словах</td>
+                    <td><span id="sentence_avg">{{sentence_avg}}</span> <em>слов</em></td>
+                    <td {% if sentence_avg >= 1 and sentence_avg <= g1_avgl_sentences_inw_l1  %} class="wordQClass" {% endif %}><em> {{g1_avgl_sentences_inw_l1}} слов</em></td>
+                    <td {% if sentence_avg > g1_avgl_sentences_inw_l1 and sentence_avg <= g1_avgl_sentences_inw_l2 %} class="wordQClass" {% endif %}><em> {{g1_avgl_sentences_inw_l2}} слов</em></td>
+                    <td {% if sentence_avg > g1_avgl_sentences_inw_l2 and sentence_avg <= g1_avgl_sentences_inw_l3 %} class="wordQClass" {% endif %}><em> {{g1_avgl_sentences_inw_l3}} слов</em></td>
+                    <td {% if sentence_avg > g1_avgl_sentences_inw_l3 and sentence_avg <= g2_avgl_sentences_inw_l1 %} class="wordQClass" {% endif %}><em> {{g2_avgl_sentences_inw_l1}} слов</em></td>
+                    <td {% if sentence_avg > g2_avgl_sentences_inw_l1 and sentence_avg <= g2_avgl_sentences_inw_l2 %} class="wordQClass" {% endif %}><em> {{g2_avgl_sentences_inw_l2}} слов</em></td>
+                    <td {% if sentence_avg > g2_avgl_sentences_inw_l2 and sentence_avg <= g3_avgl_sentences_inw_l1 %} class="wordQClass" {% endif %}><em> {{g3_avgl_sentences_inw_l1}} слов</em></td>
+                    <td {% if sentence_avg > g3_avgl_sentences_inw_l1 and sentence_avg <= g3_avgl_sentences_inw_l2 %} class="wordQClass" {% endif %}><em> {{g3_avgl_sentences_inw_l2}} слов</em></td>
+                    
+                    <td {% if sentence_avg > g3_avgl_sentences_inw_l2 and sentence_avg <= g4_avgl_sentences_inw_l1 %} class="wordQClass" {% endif %}><em> {{g4_avgl_sentences_inw_l1}} слов</em></td>
+                    <td {% if sentence_avg > g4_avgl_sentences_inw_l1 %} class="wordQClass" {% endif %}><em> {{g4_avgl_sentences_inw_l2}}+ слов</em></td>
+                  
+                </tr>
+
+                 
+                  <tr id="NumberOfLongWords">
+                    <td>Многосложные слова: > 3 слогов</em></td>
+                    <td><span id="long_words1">{{multisyllabic_wq}}</span><em> слов(а)<em></td>
+                        <td {% if multisyllabic_wq >= 1 and longw_q  <= g1_longw_q_l1  %} class="wordQClass" {% endif %}><em> {{g1_longw_q_l1}} слов</em></td>
+                        <td {% if multisyllabic_wq  > g1_longw_q_l1 and multisyllabic_wq  <= g1_longw_q_l2  %} class="wordQClass" {% endif %}><em> {{g1_longw_q_l2}} слов</em></td>
+                        <td {% if multisyllabic_wq  > g1_longw_q_l2 and multisyllabic_wq  <= g1_longw_q_l3  %} class="wordQClass" {% endif %}><em> {{g1_longw_q_l3}} слов</em></td>
+                        <td {% if multisyllabic_wq  > g1_longw_q_l3 and multisyllabic_wq  <= g2_longw_q_l1  %} class="wordQClass" {% endif %}><em>&nbsp;</em>{{g2_longw_q_l1}} слов</td>
+                        <td {% if multisyllabic_wq  > g2_longw_q_l1 and multisyllabic_wq  <= g2_longw_q_l2  %} class="wordQClass" {% endif %}><em>&nbsp;</em>{{g2_longw_q_l2}} слов</td>
+                        <td {% if multisyllabic_wq  > g2_longw_q_l2 and multisyllabic_wq  <= g3_longw_q_l1  %} class="wordQClass" {% endif %}><em> {{g3_longw_q_l1}} слов</em></td>
+                        <td {% if multisyllabic_wq  > g3_longw_q_l1 and multisyllabic_wq  <= g3_longw_q_l2  %} class="wordQClass" {% endif %}><em> {{g3_longw_q_l2}} слов</em></td>
+                        <td {% if multisyllabic_wq  > g3_longw_q_l2 and multisyllabic_wq  <= g4_longw_q_l1  %} class="wordQClass" {% endif %}><em>{{g4_longw_q_l1}} слов</em></td>
+                        <td {% if multisyllabic_wq  > g4_longw_q_l1  %} class="wordQClass" {% endif %}><em>{{g4_longw_q_l2}}+ слов</em></td>    
+                       
+                  
+                
+                
+                </tr>
+
+
+
+                  <tr id="NumberOfLongWords">
+                    <td>Сложные слова для 1-4 кл.</td>
+                    
+                    <td><span id="long_words1">{{lcwords_q}}</span><em> слов<em></td>
+                        <td {% if lcwords_q >= 1 and lcwords_q  <= g1_compw_q_l1  %} class="wordQClass" {% endif %} ><em>{{g1_compw_q_l1}} слов</em></td>
+                        <td {% if lcwords_q > g1_compw_q_l1 and lcwords_q  <= g1_compw_q_l2 %} class="wordQClass" {% endif %} ><em>{{g1_compw_q_l2}} слов</em></td>
+                        <td {% if lcwords_q > g1_compw_q_l2 and lcwords_q  <= g1_compw_q_l3 %} class="wordQClass" {% endif %} ><em>{{g1_compw_q_l3}} слов</em></td>
+                        <td {% if lcwords_q > g1_compw_q_l3  and lcwords_q <= g2_compw_q_l1  %} class="wordQClass" {% endif %}><em> {{g2_compw_q_l1}} слов</em></td>
+    
+                        <td {% if lcwords_q > g2_compw_q_l1  and lcwords_q <= g2_compw_q_l2  %} class="wordQClass" {% endif %}><em> {{g2_compw_q_l2}} слов</em></td>
+                        <td {% if lcwords_q > g2_compw_q_l2  and lcwords_q <= g3_compw_q_l1  %} class="wordQClass" {% endif %}><em> {{g3_compw_q_l1}} слов</em></td>
+                        <td {% if lcwords_q > g3_compw_q_l1  and lcwords_q <= g3_compw_q_l2  %} class="wordQClass" {% endif %}><em> {{g3_compw_q_l2}} слов</em></td>
+                        <td {% if lcwords_q > g3_compw_q_l2  and lcwords_q <= g4_compw_q_l1  %} class="wordQClass" {% endif %}><em> {{g4_compw_q_l1}} слов</em></td>
+                        <td {% if lcwords_q > g4_compw_q_l1  %} class="wordQClass" {% endif %}><em> {{g4_compw_q_l2}}+ слов</em></td>
+                        
+    
+
+                    
+                  </tr>
+
+                  <tr id="NumberOfLongWords">
+                    <td>Редкие слова для 1-4 кл.</em></td>
+
+                    <td><span id="long_words1">{{rareword_q}}</span><em> слов<em></td>
+                    <td {% if rareword_q >= 1 and rareword_q  <= g1_rarew_q_l1  %} class="wordQClass" {% endif %} ><em>{{g1_rarew_q_l1}} слов</em></td>
+
+                    <td {% if rareword_q  > g1_rarew_q_l1 and rareword_q  <= g1_rarew_q_l2  %} class="wordQClass" {% endif %} ><em>{{g1_rarew_q_l2}} слов</em></td>
+                    <td {% if rareword_q  > g1_rarew_q_l2 and rareword_q  <= g1_rarew_q_l3  %} class="wordQClass" {% endif %} ><em>{{g1_rarew_q_l3}} слов</em></td>
+
+                    <td {% if rareword_q > g1_rarew_q_l3 and rareword_q <= g2_rarew_q_l1  %} class="wordQClass" {% endif %}><em> {{g2_rarew_q_l1}} слов</em></td>
+                    <td {% if rareword_q > g2_rarew_q_l1 and rareword_q <= g2_rarew_q_l2  %} class="wordQClass" {% endif %}><em> {{g2_rarew_q_l2}} слов</em></td>
+                    <td {% if rareword_q > g2_rarew_q_l2 and rareword_q <= g3_rarew_q_l1  %} class="wordQClass" {% endif %}><em> {{g3_rarew_q_l1}} слов</em></td>
+                    <td {% if rareword_q > g3_rarew_q_l1 and rareword_q <= g3_rarew_q_l2  %} class="wordQClass" {% endif %}><em> {{g3_rarew_q_l2}} слов</em></td>
+                    <td {% if rareword_q > g3_rarew_q_l2 and rareword_q <= g4_rarew_q_l1  %} class="wordQClass" {% endif %}><em> {{g4_rarew_q_l1}} слов</em></td>
+                    <td {% if rareword_q > g4_rarew_q_l1 %} class="wordQClass" {% endif %}><em> {{g4_rarew_q_l2}} слов</em></td>
+                  
+                  </tr>
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane" role="tabpanel" id="tab-2">
+
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Общее кол. слогов</th>
+                  <td><span id="t_slog">{{syllables}}</span><em> слогов</em></td>
+                </tr>
+              </thead>
+            </table>
+            <hr>
+            <table class="table table-hover ">
+              <thead>
+                <tr>
+                  <th>Кол. уник. слов в тексте</th>
+                  <td><span id="words_uniq">{{uniquew_q}}</span><em> слов(а)</em></td>
+                </tr>
+              </thead>
+            </table>
+            <table class="table table-hover ">
+              <thead>
+                <tr>
+                  <th>Длинные слова в %</th>
+              
+                  <td><span id="long_wordsP">{{lword_p}}</span><em> %</em></td>
+               
+
+                </tr>
+              </thead>
+            </table>
+
+            <hr>
+          </div>
+          <div class="tab-pane" role="tabpanel" id="tab-3">
+
+            <table id="wordfreq" class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Слова</th>
+                  <td>&nbsp;</td>
+                  <td>Частота</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                {% for freq, fquant  in w_frequencies.items %}
+                  <tr>
+                    <td>{{freq}}</td>
+                    <td>&nbsp;</td>
+                    <td>{{fquant}}</td>
+                    
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+
+         
+          <div class="tab-pane" role="tabpanel" id="tab-4">
+
+            <table id="longwordfreq" class="table table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Длинные слова</th>
+                  <th>Длина (в буквах)</th>
+                  <th>Частота</th>
+                </tr>
+              </thead>
+           
+              <tbody>
+              
+                {% for freq, fquant in longw_frequencies.items %}
+                  <tr>
+                    <th>&nbsp;</th>
+                    <td>{{freq.0}}</td>
+                    <td>{{freq.1}}</td>
+                    <td>{{fquant}}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="tab-pane" role="tabpanel" id="tab-5">
+
+            <table id="longwordfreq" class="table table-hover">
+              <tr>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Список сложных слов</th>
+                  <td>&nbsp;</td>
+                  
+                  <td>Частота</td>
+                </tr>
+              </thead>
+           
+              <tbody>
+              
+                {% for freq, fquant  in lcword_frequencies.items %}
+                  <tr>
+                    <td>{{freq}}</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>{{fquant}}</td>
+                    
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </tr>
+            <tr>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Список редких слов</th>
+                  <td>&nbsp;</td>
+                  <td>Частота</td>
+                </tr>
+              </thead>
+           
+              <tbody>
+              
+                {% for freq, fquant  in rareword_frequencies.items %}
+                <tr>
+                  <td>{{freq}}</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>{{fquant}}</td>
+                  
+                </tr>
+              {% endfor %}
+              </tbody>
+            </tr>
+            </table>
+          </div>
+
+          <div class="tab-pane" role="tabpanel" id="tab-6">
+
+            <table id="wordfreq" class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Слова</th>
+                  <td>&nbsp;</td>
+                  <td>Частота</td>
+                </tr>
+              </thead>
+              <tbody>
+              
+                {% for freq, fquant  in fw_frequencies.items %}
+                  <tr>
+                    <td>{{freq}}</td>
+                    <td>&nbsp;</td>
+                    <td>{{fquant}}</td>
+                    
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="p-2 bg-light text-dark text-center position-relative">
+    <div class="container">
+      
+      <p style="text-align: justify ;">
+        Данная программа разработана благодаря поддержке Американского народа, оказанной через Агентство США по международному развитию (USAID). Содержание программы не обязательно отражает точку зрения USAID или Правительства Соединенных Штатов Америки.
+          
+      </p>
+
+      <a href="#" class="position-absolute bottom-0 end-0 p-5">
+        <i class="bi bi-arrow-up-circle h1"></i>
+      </a>
+    </div>
+  </footer>
+
+
+  
+  <script src="{% static '/js/jquery.min.js' %}"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+    crossorigin="anonymous"></script>
+  <script src="{% static '/js/scripts.js' %}"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>
