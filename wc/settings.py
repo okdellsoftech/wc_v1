@@ -79,8 +79,14 @@ WSGI_APPLICATION = 'wc.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'e4CDAC6f61FD6E35AG2Ca141BBadA-1A',
+        'HOST': 'viaduct.proxy.rlwy.net',
+        'PORT': '22837',
     }
 }
 
